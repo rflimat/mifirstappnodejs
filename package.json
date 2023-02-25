@@ -1,0 +1,20 @@
+{
+  "name": "mifirstappnodejs",
+  "version": "1.0.0",
+  "description": "Mi primera aplicacion",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon run src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Raul Lima <raulflimat@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
