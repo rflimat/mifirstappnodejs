@@ -1,9 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
+const animalesAPI = require('./animales');
+const estudiantesAPI = require('./estudiantes');
 const dotenv = require('dotenv').config();
 const app = express();
-
-const estudiantes = require('./data');
 
 app.use(express.json());
 app.use(morgan('dev'));
@@ -22,30 +22,8 @@ app.post('/:code', (req, res) => {
 });
 */
 
-app.get('/estudiantes', (req, res) => {
-    let codigo = req.query.codigo;
-    if (!codigo) {
-        res.send(estudiantes);
-    } else {
-        let estudiante = estudiantes.find(estudiante => estudiante.codigo == codigo);
-        (!estudiante) ? res.send("Estudiante no existe") : res.send(estudiante);
-    }
-});
-
-app.get('/estudiantes/:codigo', (req, res) => {
-    let codigo = req.params.codigo;
-    let estudiante = estudiantes.find(estudiante => estudiante.codigo == codigo);
-    (!estudiante) ? res.send("Estudiante no existe") : res.send(estudiante);
-});
-
-app.post('/estudiantes', (req, res) => {
-    let estudiante = {
-        codigo: req.body.codigo,
-        nombre: req.body.nombre
-    }
-    estudiantes.push(estudiante);
-    res.status(201).send("Estudiante registrado");
-});
+estudiantesAPI(app);
+animalesAPI(app);
 
 app.use((req, res, next) => {
     res.status(404).send("ERROR!")
