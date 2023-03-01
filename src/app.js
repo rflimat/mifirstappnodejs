@@ -1,12 +1,11 @@
 const express = require('express');
-const morgan = require('morgan');
-const animalesAPI = require('./animales');
-const estudiantesAPI = require('./estudiantes');
 const dotenv = require('dotenv').config();
-const app = express();
+const morgan = require('morgan');
 
+const app = express();
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(require('./routes'));
 
 /*
 app.get('/', (req, res) => {
@@ -21,9 +20,6 @@ app.post('/:code', (req, res) => {
     res.status(201).send('Codigo registrado');
 });
 */
-
-estudiantesAPI(app);
-animalesAPI(app);
 
 app.use((req, res, next) => {
     res.status(404).send("ERROR!")

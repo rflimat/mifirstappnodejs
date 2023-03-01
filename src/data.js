@@ -17,6 +17,32 @@ const estudiantes = [
     },
 ];
 
+const profesores = [
+    {
+        codigo: "2023-000001",
+        nombre: "Raul Lima"
+    },
+];
+
+const facultades = [
+    {
+        codigo: 1,
+        nombre: "Ingeniería"
+    }
+];
+
+const cursos = [
+    {
+        codigo: 1,
+        nombre: "Robotica chill",
+        codigoFacultad: 1
+    }
+];
+
+const aulas = [
+
+];
+
 const animales = [
     {
         nombre: "Nuxt",
@@ -46,9 +72,12 @@ const animales = [
         nombre: "Claudio",
         tipo: "Gallo"
     }
-]
+];
 
 module.exports = {
     estudiantes,
+    profesores,
+    cursos,
+    facultades,
     animales
 };
