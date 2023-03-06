@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const mysqlConnection = require('../config/db');
+const mysqlConnection = require('../config/database.connection');
 const { estudiantes } = require('../data');
 
 const router = Router();
