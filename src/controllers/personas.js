@@ -1,12 +1,15 @@
 const persona = require('../services/personas');
 
 const listarTodo = async (req, res) => {
-    try {
-        const data = await persona.listarTodo();
-        res.status(200).send(data);
-    } catch (failure) {
-        res.status(failure.status).send(failure.log);
-    }
+    if (req.session.open)
+        try {
+            const data = await persona.listarTodo();
+            res.status(200).send(data);
+        } catch (failure) {
+            res.status(failure.status).send(failure.log);
+        }
+    else
+        res.status(401).send("Es necesario autenticarse.")
 }
 
 const crear = (req, res) => {
