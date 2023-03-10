@@ -1,9 +1,9 @@
 const sesion = require('../services/sesiones');
 
 const crea = (req, res) => {
-    const { correo, contrasenia } = req.body;
+    const { correo, contrasenia, dni } = req.body;
     if (!req.session.open) {
-        sesion.crea(correo, contrasenia)
+        sesion.crea(correo, contrasenia, dni)
         .then((success) => {
             req.session.open = true;
             res.status(success.status).send(success.log);

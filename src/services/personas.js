@@ -1,12 +1,45 @@
 const mysqlConnection = require('../config/database.connection');
 
-const listarTodo = () => new Promise ((resolve, reject) => {
-    mysqlConnection.query("SELECT *FROM PERSONA", (err, rows) => {
+const listarPersonas = () => new Promise ((resolve, reject) => {
+    mysqlConnection.query("CALL listarPersonas()", (err, rows) => {
         if (err) {
             console.error(err);
             reject({log: err, status: 500});
         } else {
-            resolve(rows);
+            resolve(rows[0]);
+        }
+    });
+});
+
+const listarEstudiantes = () => new Promise ((resolve, reject) => {
+    mysqlConnection.query("CALL listarEstudiantes()", (err, rows) => {
+        if (err) {
+            console.error(err);
+            reject({log: err, status: 500});
+        } else {
+            resolve(rows[0]);
+        }
+    });
+});
+
+const listarDocentes = () => new Promise ((resolve, reject) => {
+    mysqlConnection.query("CALL listarDocentes()", (err, rows) => {
+        if (err) {
+            console.error(err);
+            reject({log: err, status: 500});
+        } else {
+            resolve(rows[0]);
+        }
+    });
+});
+
+const listarUsuarios = () => new Promise ((resolve, reject) => {
+    mysqlConnection.query("CALL listarUsuarios()", (err, rows) => {
+        if (err) {
+            console.error(err);
+            reject({log: err, status: 500});
+        } else {
+            resolve(rows[0]);
         }
     });
 });
@@ -33,4 +66,4 @@ const crear = (persona) => new Promise((resolve, reject) => {
     }
 });
 
-module.exports = { listarTodo, crear };
+module.exports = { listarPersonas, listarEstudiantes, listarDocentes, listarUsuarios, crear };

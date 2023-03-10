@@ -1,8 +1,29 @@
 const curso = require('../services/cursos');
 
-const listarTodo = async (req, res) => {
+const listarCursos = async (req, res) => {
+    const {nombre} = req.query;
+
+    if (!nombre) {
+        try {
+            const data = await curso.listarCursos();
+            res.status(200).send(data);
+        } catch (failure) {
+            res.status(failure.status).send(failure.log);
+        }
+    } else {
+        try {
+            const data = await curso.filtrarCursosNombre(nombre);
+            res.status(200).send(data);
+        } catch (failure) {
+            res.status(failure.status).send(failure.log);
+        }
+    }
+}
+
+const listarCurso = async (req, res) => {
+    const {id} = req.params;
     try {
-        const data = await curso.listarTodo();
+        const data = await curso.listarCurso(id);
         res.status(200).send(data);
     } catch (failure) {
         res.status(failure.status).send(failure.log);
@@ -15,4 +36,4 @@ const crear = (req, res) => {
     .catch(failure => res.status(failure.status).send(failure.log));
 }
 
-module.exports = { listarTodo, crear };
+module.exports = { listarCursos, listarCurso, crear };

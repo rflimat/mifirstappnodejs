@@ -3,8 +3,8 @@ const controller = require('../controllers/cursos');
 
 const router = Router();
 
-router.route('/cursos')
-    .get(controller.listarTodo)
-    .post(controller.crear);
+router.get('/cursos', controller.listarCursos)
+    .post('/cursos', controller.crear)    
+    .get('/cursos/:id', controller.listarCurso);
 
 module.exports = router;

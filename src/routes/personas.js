@@ -3,8 +3,7 @@ const controller = require('../controllers/personas');
 
 const router = Router();
 
-router.route('/personas')
-    .get(controller.listarTodo)
-    .post(controller.crear);
+router.get('/personas', controller.listarTodo)
+    .post('/personas', controller.crear);
 
 module.exports = router;
