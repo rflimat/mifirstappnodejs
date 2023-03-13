@@ -54,13 +54,17 @@ const crear = (persona) => new Promise((resolve, reject) => {
     else if (!correo) reject({log: "Falto el campo correo", status: 400});
     else if (!celular) reject({log: "Falto el campo celular", status: 400});
     else {
-        const query = mysqlConnection.format(`INSERT INTO PERSONA (NOMBRE, APELLIDO1, APELLIDO2, DNI, CORREO, CELULAR) VALUES (?, ?, ?, ?, ?, ?)`, [nombre, apellido1, apellido2, dni, correo, celular]);
+        const query = mysqlConnection.format(`SELECT registrarPersona(?, ?, ?, ?, ?, ?) AS estado`, [nombre, apellido1, apellido2, dni, correo, celular]);
         mysqlConnection.query(query, (err, rows) => {
             if (err) {
                 console.error(err);
                 reject({log: err, status: 500});
             } else {
-                resolve({log: "Persona registrado", status: 201});
+                if (rows[0].estado == 0) {
+                    reject({log: "DNI o correo de persona ya existente", status: 404});
+                } else {
+                    resolve({log: "Persona registrado", status: 201});
+                }
             }
         })
     }

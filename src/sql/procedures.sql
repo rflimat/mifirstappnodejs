@@ -58,3 +58,24 @@ BEGIN
 	SELECT *FROM persona WHERE id BETWEEN 2 AND 13;
 END
 //
+
+DROP FUNCTION IF EXISTS registrarPersona;
+DELIMITER //
+CREATE FUNCTION registrarPersona (
+	_nombre VARCHAR(50),
+    _apellido1 VARCHAR(50),
+    _apellido2 VARCHAR(50),
+    _dni VARCHAR(8),
+    _correo VARCHAR(30),
+    _celular VARCHAR(13)
+) RETURNS TINYINT
+BEGIN
+    IF (SELECT COUNT(DNI) FROM persona WHERE DNI=_dni) <= 0 AND (SELECT COUNT(CORREO) FROM persona WHERE CORREO=_correo) <= 0 THEN
+		INSERT INTO persona(nombre, apellido1, apellido2, dni, correo, celular) VALUES (_nombre, _apellido1, _apellido2, _dni, _correo, _celular);
+		RETURN 1;
+    ELSE
+		RETURN 0;
+	END IF;
+END
+//
+

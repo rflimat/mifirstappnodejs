@@ -19,4 +19,4 @@ CREATE FUNCTION validarCredenciales( CORREO VARCHAR(30), CONTRASENIA VARCHAR(15)
 END
 $$
 
-select validarCredenciales('raulflimat@gmail.com', '12345678') as registrado;
+select validarCredenciales('raulflimat@gmail.com', '123123') as registrado;

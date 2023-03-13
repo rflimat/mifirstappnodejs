@@ -1,7 +1,7 @@
 const mysqlConnection = require('../config/database.connection');
 
-const crea = (correo, contrasenia, dni) => new Promise((resolve, reject) => {
-    let query = mysqlConnection.format("select validarCredenciales(?, ?, ?) as registrado", [correo, contrasenia, dni]);
+const crea = (correo, contrasenia) => new Promise((resolve, reject) => {
+    let query = mysqlConnection.format("select validarCredenciales(?, ?) as registrado", [correo, contrasenia]);
     mysqlConnection.query(query, (err, rows) => {
         if (err) {
             console.log(err);

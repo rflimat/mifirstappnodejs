@@ -12,20 +12,6 @@ app.use(morgan('dev'));
 app.use(session(sessionParameters));
 app.use(require('./routes'));
 
-/*
-app.get('/', (req, res) => {
-    console.log("Se detecto peticion GET /");
-    res.send(`<strong>Hola ${req.query.name}!</strong>`);
-});
-
-app.post('/:code', (req, res) => {
-    console.log("Se detecto peticion POST /", req.body);
-    console.log("Parametros de query", req.query);
-    console.log("Parametro de url:", req.params.code);
-    res.status(201).send('Codigo registrado');
-});
-*/
-
 app.use((req, res, next) => {
     res.status(404).send("ERROR!")
 })
