@@ -33,9 +33,13 @@ const listarTodo = async (req, res) => {
 }
 
 const crear = (req, res) => {
-    persona.crear(req.body)
-    .then(success => res.status(success.status).send(success.log))
-    .catch(failure => res.status(failure.status).send(failure.log));
+    if (req.session.open) {
+        persona.crear(req.body)
+        .then(success => res.status(success.status).send(success.log))
+        .catch(failure => res.status(failure.status).send(failure.log));
+    } else {
+        res.status(401).send("Es necesario autenticarse.");
+    }
 }
 
 module.exports = { listarTodo, crear };
