@@ -1,4 +1,5 @@
 const mysqlConnection = require('../config/database.connection');
+const transporter = require('../config/mailer.connection');
 
 const listarPersonas = () => new Promise ((resolve, reject) => {
     mysqlConnection.query("CALL listarPersonas()", (err, rows) => {
@@ -63,6 +64,14 @@ const crear = (persona) => new Promise((resolve, reject) => {
                 if (rows[0].estado == 0) {
                     reject({log: "DNI o correo de persona ya existente", status: 404});
                 } else {
+                    transporter.sendMail({
+                        from: process.env.MAIL_USER,
+                        to: correo,
+                        subject: "Se registro en schoolXD",
+                        text: `Usted ${nombre} ${apellido1} ${apellido2}, logro registrarse en schoolXD`,
+                        html: `<p>Usted ${nombre} ${apellido1} ${apellido2}, logro registrarse en schoolXD</p>`,
+                    });
+                    
                     resolve({log: "Persona registrado", status: 201});
                 }
             }
