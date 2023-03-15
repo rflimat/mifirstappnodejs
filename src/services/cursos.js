@@ -1,4 +1,5 @@
 const mysqlConnection = require('../config/database.connection');
+const fs = require('fs');
 
 const listarCursos = () => new Promise((resolve, reject) => {
     mysqlConnection.query("CALL listarCursos()", (err, rows) => {
@@ -50,4 +51,23 @@ const crear = (curso) => new Promise((resolve, reject) => {
     }
 });
 
-module.exports = { listarCursos, listarCurso, filtrarCursosNombre, crear };
+const nuevaFoto = (idCurso) => new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT existeCurso(?) AS result", idCurso, (err, rows) => {
+        if (err) {
+            console.log(err.sqlMessage);
+            reject({log: "Error interno del servidor", status: 500});
+        } else {
+            if (rows[0].result == 1) resolve({log: "El archivo se ha guardado con exito", status: 201});
+            else fs.unlink(`photos/curso-${idCurso}.png`, err => {
+                if (err) {
+                    console.log(err);
+                    reject({log: "Error interno del servidor", status: 500});
+                } else {
+                    resolve({log: "El curso especificado no existe", status: 404});
+                }
+            });
+        }
+    })
+});
+
+module.exports = { listarCursos, listarCurso, filtrarCursosNombre, crear, nuevaFoto };

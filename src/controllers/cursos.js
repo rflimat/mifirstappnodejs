@@ -1,4 +1,5 @@
 const curso = require('../services/cursos');
+const { clearTemporaryFile } = require('../config/file.upload.curso');
 
 const listarCursos = async (req, res) => {
     const {nombre} = req.query;
@@ -36,4 +37,17 @@ const crear = (req, res) => {
     .catch(failure => res.status(failure.status).send(failure.log));
 }
 
-module.exports = { listarCursos, listarCurso, crear };
+const nuevaFoto = (req, res) => {
+    if (req.session.open) {
+        if (req.params.id) {
+            curso.nuevaFoto(req.params.id)
+            .then(success => res.status(success.status).send(success.log))
+            .catch(failure => res.status(failure.status).send(failure.log));
+        } else res.status(400).send("Es necesario especificar un recurso.")
+    } else {
+        clearTemporaryFile();
+        res.status(401).send("Es necesario autenticarse");
+    }
+}
+
+module.exports = { listarCursos, listarCurso, crear, nuevaFoto };
